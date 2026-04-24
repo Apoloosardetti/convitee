@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Convite Especial 💖</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    height:100vh;
+    font-family: Arial;
+
+    /* 🔥 FUNDO DARK */
+    background: linear-gradient(135deg,#0a0a0a,#141414,#1f1f1f);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+/* CARD */
+.card{
+    width:360px;
+    background:#111;
+    color:white;
+    padding:30px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 15px 40px rgba(0,0,0,0.7);
+    animation: aparecer 1.2s ease;
+}
+
+/* TEXTOS */
+h1{
+    color:#ff3f6c;
+    margin-bottom:10px;
+}
+
+p{
+    color:#ccc;
+    margin-bottom:20px;
+}
+
+/* SELECT */
+select{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:20px;
+    background:#222;
+    color:white;
+    border:none;
+}
+
+/* BOTÕES */
+.btn{
+    padding:12px 20px;
+    border:none;
+    border-radius:25px;
+    margin:5px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.sim{background:#ff3f6c;color:white;}
+.nao{background:#555;color:white;position:absolute;}
+.musica-btn{background:#222;color:white;}
+
+.btn:hover{
+    transform:scale(1.05);
+}
+
+/* RESULTADO */
+.resultado{
+    margin-top:15px;
+    color:#ff3f6c;
+    font-weight:bold;
+}
+
+/* CORAÇÃO */
+.coracao{
+    font-size:40px;
+    animation:pulsar 1s infinite;
+}
+
+/* CORAÇÕES */
+.heart{
+    position:absolute;
+    color:#ff3f6c;
+    font-size:22px;
+    animation:subir 5s linear infinite;
+}
+
+@keyframes subir{
+    0%{bottom:-50px;opacity:1;}
+    100%{bottom:100%;opacity:0;}
+}
+
+@keyframes aparecer{
+    from{opacity:0;transform:translateY(50px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+@keyframes pulsar{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.2);}
+    100%{transform:scale(1);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSICA -->
+<audio id="musica" loop>
+    <source src="esperando.mp3.mp3" type="audio/mpeg">
+</audio>
+
+<!-- CORAÇÕES -->
+<div class="heart" style="left:10%;animation-delay:0s;">❤</div>
+<div class="heart" style="left:30%;animation-delay:1s;">❤</div>
+<div class="heart" style="left:60%;animation-delay:2s;">❤</div>
+<div class="heart" style="left:80%;animation-delay:3s;">❤</div>
+
+<!-- CARD -->
+<div class="card">
+    <div class="coracao">❤️</div>
+
+    <h1>Tenho um convite...</h1>
+
+    <p>
+        Oi <b>Manu</b> 💕<br><br>
+        Sei que não parece mas...<br>
+        Quero poder te conhecer melhor
+    </p>
+
+    <select id="lugar">
+        <option value="">Escolha...</option>
+        <option>🍕 Pizzaria</option>
+        <option>🍔 Hambúrguer</option>
+        <option>🎬 Cinema</option>
+        <option>🍣 Japonês</option>
+        <option>🌅 Passeio</option>
+    </select>
+
+    <button class="btn musica-btn" onclick="tocarMusica()">
+        🎵 Tocar música
+    </button>
+
+    <div>
+        <button class="btn sim" onclick="aceitar()">SIM 😍</button>
+        <button class="btn nao" id="nao">NÃO</button>
+    </div>
+
+    <div class="resultado" id="resposta"></div>
+</div>
+
+<script>
+let musica = document.getElementById("musica");
+
+function tocarMusica(){
+    musica.play().catch(() => {
+        alert("Clica na tela primeiro 😏");
+    });
+}
+
+document.body.addEventListener("click", () => {
+    musica.play().catch(() => {});
+}, { once: true });
+
+let nao = document.getElementById("nao");
+
+nao.addEventListener("mouseover", () => {
+    let x = Math.random() * (window.innerWidth - 100);
+    let y = Math.random() * (window.innerHeight - 50);
+    nao.style.left = x + "px";
+    nao.style.top = y + "px";
+});
+
+function aceitar(){
+    let lugar = document.getElementById("lugar").value;
+    let resposta = document.getElementById("resposta");
+
+    if(lugar === ""){
+        resposta.innerHTML = "Escolhe um lugar primeiro 😏";
+        return;
+    }
+
+    resposta.innerHTML = "Perfeito 😍 nosso encontro vai ser: " + lugar;
+
+    let msg = encodeURIComponent("Eu aceito sair com você 😍 vamos no " + lugar + " 💖");
+    window.open("https://wa.me/?text=" + msg, "_blank");
+}
+</script>
+
+</body>
+</html>
